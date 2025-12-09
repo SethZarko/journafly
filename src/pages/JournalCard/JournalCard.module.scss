@@ -1,0 +1,212 @@
+.journalEntry {
+  width: 100%;
+  max-width: 1400px;
+  min-width: 320px;
+  margin: 0 auto;
+  padding: 16px;
+
+  div {
+    background-color: rgba(101, 101, 101, 0.078);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+    padding: 38px;
+    border: 1px solid rgba(255, 255, 255, 0.131);
+
+    .titleContainer {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: column;
+      background: none;
+      border: none;
+      padding: 8px 24px;
+      margin-bottom: 16px;
+    }
+
+    .readTitle {
+      width: 100%;
+      margin: 0; 
+      text-align: center;
+      color: rgb(242, 242, 242);
+      font-size: 18px;
+      font-weight: 600;
+      background: none;
+      border: none;
+      outline: none;
+      resize: none;
+
+      @media (min-width: 500px) {
+        font-size: 24px;
+        height: 48px;
+        margin-bottom: 16px;
+      }
+
+      @media (min-width: 1024px) {
+        text-align: left;
+      }
+    }
+
+    .editTitle {
+      width: 100%;
+      height: 64px;
+      margin-top: 1rem;
+      resize: none;
+    }
+
+    code {
+      display: block;
+      background-color: rgba(0, 0, 0, 0.228);
+      padding: 16px;
+      border-radius: 8px;
+      color: #999999b6;
+      margin-bottom: 24px;
+      font-size: 16px;
+    }
+
+    .read {
+      width: 100%;
+      height: 60dvh;
+      border: none;
+      background: none;
+      outline: none;
+      width: 95%;
+      margin: 0 auto;
+      line-height: 1.6;
+      color: rgb(220, 220, 220);
+      font-size: 16px;
+      resize: none;
+
+      @media (min-width: 500px) {
+        font-size: 18px;
+      }
+
+      @media (min-width: 900px) {
+        font-size: 20px;
+      }
+    }
+
+    .edit {
+      width: 100%;
+      height: 60dvh;
+      width: 95%;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+      color: rgb(220, 220, 220);
+      font-size: 16px;
+      resize: none;
+
+      @media (min-width: 500px) {
+        font-size: 18px;
+      }
+
+      @media (min-width: 900px) {
+        font-size: 20px;
+      }
+    }
+
+    .showCount {
+      display: block;
+
+      small {
+        color: rgb(154, 154, 154);
+      }
+    }
+
+    .hideCount {
+      display: none;
+    }
+
+    button {
+      width: 150px;
+      padding: 2px 24px;
+      font-size: 0.5rem;
+      letter-spacing: 0.5px;
+      border: solid 0.5px transparent;
+      transition: background ease-in-out 0.2s;
+
+      @media (min-width: 768px) {
+        font-size: 0.55rem;
+        padding: 2px 28px;
+      }
+
+      @media (min-width: 1024px) {
+        font-size: 0.75rem;
+        padding: 4px 32px;
+      }
+    }
+
+    .btnContainer {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btnContainer button {
+      flex-grow: 1;
+      margin: 0 auto;
+      max-width: 100px;
+
+      @media (min-width: 768px) {
+        max-width: 150px;
+      }
+    }
+
+    .editBtn {
+      background-color: rgba(212, 161, 79, 0.157);
+      &:hover {
+        background-color: rgba(151, 108, 39, 0.74);
+        border: solid 0.5px white;
+      }
+    }
+
+    .saveBtn {
+      background-color: rgb(79, 212, 95);
+      &:hover {
+        background-color: rgb(64, 141, 73);
+        border: solid 0.5px white;
+      }
+    }
+
+    .cancelBtn {
+      background-color: crimson;
+      &:hover {
+        background-color: rgb(141, 30, 53);
+        border: solid 0.5px white;
+      }
+    }
+
+    .deleteBtn {
+      background-color: rgba(220, 20, 60, 0.31);
+      &:hover {
+        background-color: rgba(255, 0, 51, 0.526);
+        border: solid 0.5px white;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      flex-direction: row;
+    }
+  }
+
+  .backBtn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 48px;
+  }
+
+  @media (min-width: 768px) {
+    min-width: 500px;
+  }
+
+  @media (min-width: 1024px) {
+    min-width: 800px;
+  }
+
+  @media (min-width: 1440px) {
+    min-width: 1200px;
+  }
+}

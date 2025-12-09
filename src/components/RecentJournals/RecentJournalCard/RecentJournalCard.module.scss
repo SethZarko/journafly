@@ -1,0 +1,45 @@
+.journalEntry {
+  width: 100%;
+  min-width: 200px;
+  min-height: 300px;
+  margin: 0 auto;
+
+  h2 {
+    color: rgb(242, 242, 242);
+    margin-bottom: 24px;
+    font-size: 18px;
+
+    @media (min-width: 768px) {
+      font-size: 32px;
+    }
+  }
+
+  code {
+    width: 100%;
+    display: block;
+    background-color: rgba(0, 0, 0, 0.228);
+    padding: 16px;
+    border-radius: 8px;
+    color: #999999b6;
+    margin: 0 auto 24px;
+    font-size: 12px;
+
+    @media (min-width: 768px) {
+      font-size: 18px;
+    }
+  }
+
+  p {
+    line-height: 1.6;
+    color: rgb(220, 220, 220);
+    font-size: 14px;
+
+    @media (min-width: 768px) {
+      font-size: 18px;
+    }
+
+    @media (min-width: 1200px) {
+      font-size: 20px;
+    }
+  }
+}

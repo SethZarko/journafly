@@ -1,0 +1,25 @@
+.headerWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 24px;
+  margin-top: 24px;
+
+  button {
+    padding: 8px;
+  }
+
+  @media(min-width: 400px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  @media(min-width: 1024px) {
+    padding: 24px;
+    button {
+      padding: 16px;
+    }
+  }
+}
