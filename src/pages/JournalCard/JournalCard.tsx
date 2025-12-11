@@ -1,9 +1,4 @@
-import {
-  Link,
-  useNavigate,
-  useOutletContext,
-  useParams,
-} from "react-router";
+import { Link, useNavigate, useOutletContext, useParams } from "react-router";
 import { useState } from "react";
 
 import type { IJournal } from "../../App";
@@ -12,21 +7,23 @@ import styles from "./JournalCard.module.scss";
 
 export const JournalCard: React.FC = (): React.ReactNode => {
   const { id } = useParams();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [sortedJournals, setJournals] =
     useOutletContext<
       [IJournal[], React.Dispatch<React.SetStateAction<IJournal[]>>]
-  >();
+    >();
 
-  const currentJournal: IJournal | undefined = sortedJournals?.find(j => j.id === id);
+  const currentJournal: IJournal | undefined = sortedJournals?.find(
+    (j) => j.id === id
+  );
 
   const [readOnly, setReadOnly] = useState<boolean>(true);
   const [form, setForm] = useState<IJournal>(
     currentJournal || {
-      id: '',
-      title: '',
-      entry: '',
+      id: "",
+      title: "",
+      entry: "",
       date: new Date().toISOString(),
       createdAt: new Date().toISOString(),
     }
@@ -43,13 +40,15 @@ export const JournalCard: React.FC = (): React.ReactNode => {
 
   const handleCancel = () => {
     setReadOnly(true);
-    setForm(currentJournal || {
-      id: '',
-      title: '',
-      entry: '',
-      date: new Date().toISOString(),
-      createdAt: new Date().toISOString(),
-    });
+    setForm(
+      currentJournal || {
+        id: "",
+        title: "",
+        entry: "",
+        date: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+      }
+    );
   };
 
   const handleSave = () => {
@@ -68,27 +67,38 @@ export const JournalCard: React.FC = (): React.ReactNode => {
   };
 
   const handleDelete = (id: string | undefined) => {
-    const confirmDelete = window.confirm('Are you sure you want to delete this journal entry?');
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this journal entry?"
+    );
 
     if (!confirmDelete) {
-      return; 
+      return;
     }
 
-    setJournals(prev => prev.filter(j => j.id !== id));
-    navigate('/all')
-  }
+    setJournals((prev) => prev.filter((j) => j.id !== id));
+    navigate("/all");
+  };
 
   const handlePageReturn = () => {
-    window.scrollTo(0, 0)
-  }
+    window.scrollTo(0, 0);
+  };
 
   const max = 1500;
   const charsUsed = form.entry.length;
-  const charRemain = 1500 - charsUsed
+  const charRemain = max - charsUsed;
+
+  const titleMax = 30;
+  const titleChars = form.title.length;
+  const titleRemain = titleMax - titleChars;
 
   return (
     <section id="journal-entry" className={styles.journalEntry}>
       <div>
+        {!readOnly && (
+          <label className={styles.showCount}>
+            Edit Journal Title: <small>({titleRemain} characters left)</small>
+          </label>
+        )}
         <div className={styles.titleContainer}>
           <textarea
             id="entry-title"
@@ -120,32 +130,45 @@ export const JournalCard: React.FC = (): React.ReactNode => {
           value={form.entry}
           onChange={handleChange}
         />
-         <span className={styles.btnContainer}>
-            <button
-              onClick={readOnly ? handleEdit : handleSave}
-              className={readOnly ? styles.editBtn : styles.saveBtn}
-            >
-              {readOnly ? "Edit" : "Save"}
+        <span className={styles.btnContainer}>
+          <button
+            onClick={readOnly ? handleEdit : handleSave}
+            className={readOnly ? styles.editBtn : styles.saveBtn}
+          >
+            {readOnly ? "Edit" : "Save"}
+          </button>
+          {!readOnly && (
+            <button onClick={handleCancel} className={styles.cancelBtn}>
+              Cancel
             </button>
-            {!readOnly && (
-              <button onClick={handleCancel} className={styles.cancelBtn}>
-                Cancel
-              </button>
-            )}
-            {readOnly && (
-              <button onClick={() => handleDelete(currentJournal?.id)} className={styles.deleteBtn}>
-                Delete
-              </button>
-            )}
-          </span>
+          )}
+          {readOnly && (
+            <button
+              onClick={() => {
+                handleDelete(currentJournal?.id);
+                handlePageReturn();
+              }}
+              className={styles.deleteBtn}
+            >
+              Delete
+            </button>
+          )}
+        </span>
       </div>
       <span className={styles.backBtn}>
-        <Link to='/all' onClick={handlePageReturn}>
-          <button>
-            Return to all Journals
-          </button>
+        <Link to="/all" onClick={handlePageReturn}>
+          <button>Return to all Journals</button>
         </Link>
       </span>
+      
+      <div>
+        <h4>Inspiration</h4>
+        <blockquote>{form.inspiration?.quote}</blockquote>
+        <small>
+          <p>{form.inspiration?.author}</p>
+          <em>{form.inspiration?.work}</em>
+        </small>
+      </div>
     </section>
   );
 };

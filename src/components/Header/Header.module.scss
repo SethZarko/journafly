@@ -7,16 +7,112 @@
   padding: 16px 24px;
   margin-top: 24px;
 
+  .headerLogoContainer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  h1 {
+    position: relative;
+    z-index: 1;
+    padding: 6px 12px;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      border-radius: 50%;
+      mix-blend-mode: screen;
+      filter: blur(36px);
+      opacity: 0.16;
+      will-change: transform, opacity, filter;
+    }
+
+    &::before {
+      width: 100;
+      height: 120%;
+      left: 10%;
+      top: -20%;
+      background: radial-gradient(
+        circle at 25% 35%,
+        rgba(90, 192, 255, 0.95) 0%,
+        rgba(123, 205, 255, 0.45) 30%,
+        transparent 60%
+      );
+      transform: translateX(0) rotate(0deg) scale(1);
+      animation: bg-flow 10s ease-in-out infinite alternate;
+
+      @media (min-width: 768px) {
+        width: 220%;
+      }
+    }
+
+    &::after {
+      width: 100%;
+      height: 100%;
+      right: -10%;
+      bottom: -30%;
+      background: radial-gradient(
+        circle at 75% 65%,
+        rgba(123, 205, 255, 0.6) 0%,
+        rgba(90, 192, 255, 0.18) 30%,
+        transparent 60%
+      );
+      opacity: 0.12;
+      transform: translateX(0) rotate(0deg) scale(1);
+      animation: bg-flow-2 14s ease-in-out infinite alternate;
+
+      @media (min-width: 768px) {
+        width: 160%;
+      }
+    }
+
+    @keyframes bg-flow {
+      from {
+        transform: translateX(-6%) rotate(-6deg) scale(1);
+      }
+      to {
+        transform: translateX(6%) rotate(6deg) scale(1.04);
+      }
+    }
+
+    @keyframes bg-flow-2 {
+      from {
+        transform: translateY(-6%) rotate(6deg) scale(1);
+      }
+      to {
+        transform: translateY(6%) rotate(-6deg) scale(1.02);
+      }
+    }
+  }
+
+  .homeIcon {
+    color: rgba(103, 197, 255, 0.738);
+    cursor: pointer;
+    font-size: 32px;
+    transition: all ease-in-out 0.2s;
+
+    &:hover {
+      color: rgb(123, 205, 255);
+      scale: calc(1.2);
+      text-shadow: 0 0 8px rgba(90, 192, 255, 0.572),
+        0 0 16px rgba(123, 205, 255, 0.7);
+      filter: drop-shadow(0 0 6px rgba(123, 204, 255, 0.16));
+    }
+  }
+
   button {
     padding: 8px;
   }
 
-  @media(min-width: 400px) {
+  @media (min-width: 400px) {
     flex-direction: row;
     justify-content: space-between;
   }
 
-  @media(min-width: 1024px) {
+  @media (min-width: 1024px) {
     padding: 24px;
     button {
       padding: 16px;

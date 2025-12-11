@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useOutletContext, useNavigate } from "react-router";
+import { useState, type CSSProperties } from "react";
+import { useOutletContext, useNavigate, useLocation } from "react-router";
 import { motion } from "motion/react";
 
 import type { IJournal } from "../../App";
@@ -17,16 +17,29 @@ const intialFormState: IFormState = {
 };
 
 export const NewJournal: React.FC = (): React.ReactNode => {
-  const navigate = useNavigate()
+  // Hookes
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // Outlet Journal Context State
+  // Location State
+  const quote: string = location.state.quote;
+  const work: string = location.state.work;
+  const author: string = location.state.author;
+
+  // Outlet Context State
   const [, setJournals] =
     useOutletContext<
       [IJournal[], React.Dispatch<React.SetStateAction<IJournal[]>>]
     >();
 
-  // Form State
+  // Local State
   const [form, setForm] = useState<IFormState>(intialFormState);
+  const [showQuote, setShowQuote] = useState<boolean>(true);
+
+  // Custom Styles
+  const authorStyle: CSSProperties = {
+    flexDirection: work.length > 25 || author.length > 25 ? "column" : "row",
+  };
 
   // Functions
   const handleChange = (
@@ -46,19 +59,51 @@ export const NewJournal: React.FC = (): React.ReactNode => {
       entry: form.entry,
       date: new Date().toISOString(),
       createdAt: new Date().toISOString(),
+      inspiration: {
+        quote: quote,
+        work: work,
+        author: author,
+      },
     };
 
     setJournals((prev) => [...prev, newJournal]);
 
     setForm(intialFormState);
-    navigate('/all')
+    navigate("/all");
     window.scrollTo(0, 0);
   };
 
-  const btnDisabled: boolean = !form.title || !form.entry
+  const handleShowQuote = () => {
+    setShowQuote((prev) => !prev);
+  };
+
+  const btnDisabled: boolean = !form.title || !form.entry;
 
   return (
     <section id="new-journal" className={styles.newJournalPage}>
+      <motion.div
+        className={styles.quoteContainer}
+        initial={{ y: "-100vh", opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <button onClick={handleShowQuote}>
+          {!showQuote ? "Show Inspiration" : "Hide"}
+        </button>
+
+        <div className={styles.quoteWrapper}>
+          {showQuote && (
+            <>
+              <blockquote>{quote}</blockquote>
+              <small className={styles.authorWork} style={authorStyle}>
+                <p>{author} - </p>
+                <em>{work}</em>
+              </small>
+            </>
+          )}
+        </div>
+      </motion.div>
+
       <motion.div
         initial={{ y: "-100vh", opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -66,12 +111,18 @@ export const NewJournal: React.FC = (): React.ReactNode => {
       >
         <form className="container" onSubmit={handleForm}>
           <div className={styles.formGroup}>
-            <label htmlFor="title">Journal Title</label>
+            <label htmlFor="title">
+              Journal Title{" "}
+              <small>
+                ({form.title.length <= 30 ? 30 - form.title.length : 0}{" "}
+                characters remaining)
+              </small>
+            </label>
             <input
               id="title"
               type="text"
               name="title"
-              maxLength={100}
+              maxLength={30}
               value={form.title}
               onChange={handleChange}
             />
@@ -79,7 +130,11 @@ export const NewJournal: React.FC = (): React.ReactNode => {
 
           <div className={styles.formGroup}>
             <label htmlFor="entry">
-              Journal Entry <small>({form.entry.length <= 1500 ? 1500 - form.entry.length : 0} characters left)</small>
+              Journal Entry{" "}
+              <small>
+                ({form.entry.length <= 1500 ? 1500 - form.entry.length : 0}{" "}
+                characters remaining)
+              </small>
             </label>
             <textarea
               id="entry"
@@ -90,7 +145,9 @@ export const NewJournal: React.FC = (): React.ReactNode => {
               onChange={handleChange}
             ></textarea>
           </div>
-          <button type="submit" disabled={btnDisabled}>Post Journal</button>
+          <button type="submit" disabled={btnDisabled}>
+            Post Journal
+          </button>
         </form>
       </motion.div>
     </section>
