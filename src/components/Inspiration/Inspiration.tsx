@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { InspirationCard } from "./InspirationCard/InspirationCard";
 import { Pagination } from "../Pagination/Pagination";
+import { useOutletContext } from "react-router";
+import type { IJournal } from '../../App';
 
 interface IQuotes {
   id: string;
@@ -21,7 +23,7 @@ interface IInspirationProps {
 export const Inspiration: React.FC<IInspirationProps> = ({
   philosopher,
 }): React.ReactNode => {
-  const [data, setData] = useState<IData | null>(null);
+  const [ , , quotes, setQuotes, setCurrentQuote] = useOutletContext<[IJournal[], React.Dispatch<React.SetStateAction<IJournal[]>>, IData | null, React.Dispatch<React.SetStateAction<IData[]>>,  React.Dispatch<React.SetStateAction<number>>]>()
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -49,7 +51,7 @@ export const Inspiration: React.FC<IInspirationProps> = ({
           throw new Error(`Request failed with status ${res.status}`);
 
         const json = await res.json();
-        setData(json);
+        setQuotes(json);
       } catch (err: unknown) {
         setError(err instanceof Error ? err.message : String(err));
       } finally {
@@ -59,17 +61,18 @@ export const Inspiration: React.FC<IInspirationProps> = ({
 
     fetchData(philosopher);
     setCurrentPage(1);
-  }, [philosopher]);
+  }, [philosopher, setQuotes]);
 
   // Pagination
   const indexOfLastQuote = currentPage * quotesPerPage;
   const indexOfFirsQuote = indexOfLastQuote - quotesPerPage;
-  const currentQuote = data?.quotes
+  const currentQuote = quotes?.quotes
     ?.slice(0, 5)
     ?.slice(indexOfFirsQuote, indexOfLastQuote);
 
   const handlePagination = (pageNumber: number) => {
     setCurrentPage(pageNumber);
+    setCurrentQuote(pageNumber)
   };
 
   return (
@@ -84,7 +87,7 @@ export const Inspiration: React.FC<IInspirationProps> = ({
       {currentQuote?.map((quote: IQuotes) => (
         <InspirationCard
           key={quote?.id}
-          name={data?.name}
+          name={quotes?.name}
           quote={quote?.quote}
           work={quote?.work}
           search={authorSearch}
@@ -92,7 +95,7 @@ export const Inspiration: React.FC<IInspirationProps> = ({
       ))}
       <Pagination
         itemsPerPage={quotesPerPage}
-        totalItems={data?.quotes?.slice(0, 5)?.length}
+        totalItems={quotes?.quotes?.slice(0, 5)?.length}
         currentPage={currentPage}
         paginate={handlePagination}
       />

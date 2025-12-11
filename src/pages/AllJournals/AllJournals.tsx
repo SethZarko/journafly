@@ -17,11 +17,10 @@ export const AllJournals: React.FC = (): React.ReactNode => {
     getScrollElement: () => scrollRef.current,
   });
 
-  if (!sortedJournals.length) return null;
-
   return (
     <section id="all-journals">
-      <div ref={scrollRef} style={{ height: "100dvh", overflowY: "auto" }}>
+      {sortedJournals?.length === 0 && <div style={{ textAlign: 'center', color: 'lightgray', fontSize: '24px' }}>Add your first Journal!</div>}
+      {sortedJournals?.length !== 0 && <div ref={scrollRef} style={{ height: "100dvh", overflowY: "auto" }}>
         <div
           className={styles.cardContainer}
           style={{
@@ -47,9 +46,7 @@ export const AllJournals: React.FC = (): React.ReactNode => {
               >
                 <div key={index} className={styles.card}>
                   <h2>
-                    {journal.title.length > 50
-                      ? journal.title.slice(0, 45) + "....."
-                      : journal.title}
+                    {journal.title}
                   </h2>
                   <code>
                     <small>{new Date(journal.date).toDateString()}</small>
@@ -65,7 +62,7 @@ export const AllJournals: React.FC = (): React.ReactNode => {
             );
           })}
         </div>
-      </div>
+      </div>}
     </section>
   );
 };
