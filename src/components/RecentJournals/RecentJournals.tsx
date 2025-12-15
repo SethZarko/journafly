@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Pagination } from "../Pagination/Pagination";
 import { RecentJournalCard } from "./RecentJournalCard/RecentJournalCard";
 
-import type { IJournal } from "../../App";
+import type { IJournal } from "../../types/IJournal";
 
 import styles from "./RecentJournals.module.scss";
 import { useAppState } from "../../context/AppStateContext";
