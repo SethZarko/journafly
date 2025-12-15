@@ -1,7 +1,8 @@
-import { Link, useNavigate, useOutletContext, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { useState } from "react";
+import { useAppState } from "../../context/AppStateContext";
 
-import type { IJournal } from "../../App";
+import type { IJournal } from "../../types/IJournal";
 
 import styles from "./JournalCard.module.scss";
 
@@ -9,10 +10,8 @@ export const JournalCard: React.FC = (): React.ReactNode => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [sortedJournals, setJournals] =
-    useOutletContext<
-      [IJournal[], React.Dispatch<React.SetStateAction<IJournal[]>>]
-    >();
+  const { sortedJournals, setJournals } =
+    useAppState();
 
   const currentJournal: IJournal | undefined = sortedJournals?.find(
     (j) => j.id === id

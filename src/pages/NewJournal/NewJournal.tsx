@@ -1,8 +1,9 @@
 import { useState, type CSSProperties } from "react";
-import { useOutletContext, useNavigate, useLocation } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import { motion } from "motion/react";
+import { useAppState } from "../../context/AppStateContext";
 
-import type { IJournal } from "../../App";
+import type { IJournal } from "../../types/IJournal";
 
 import styles from "./NewJournal.module.scss";
 
@@ -17,7 +18,7 @@ const intialFormState: IFormState = {
 };
 
 export const NewJournal: React.FC = (): React.ReactNode => {
-  // Hookes
+  // Hooks
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -26,20 +27,21 @@ export const NewJournal: React.FC = (): React.ReactNode => {
   const work: string = location.state.work;
   const author: string = location.state.author;
 
-  // Outlet Context State
-  const [, setJournals] =
-    useOutletContext<
-      [IJournal[], React.Dispatch<React.SetStateAction<IJournal[]>>]
-    >();
+  // App Context State
+  const { setJournals } = useAppState();
 
   // Local State
   const [form, setForm] = useState<IFormState>(intialFormState);
   const [showQuote, setShowQuote] = useState<boolean>(true);
 
   // Custom Styles
-  const authorStyle: CSSProperties = {
-    flexDirection: work.length > 25 || author.length > 25 ? "column" : "row",
-  };
+  let authorStyle: CSSProperties = {};
+
+  if (work?.length && author?.length) {
+    authorStyle = {
+      flexDirection: work.length > 25 || author.length > 25 ? "column" : "row",
+    };
+  }
 
   // Functions
   const handleChange = (
@@ -120,6 +122,7 @@ export const NewJournal: React.FC = (): React.ReactNode => {
             </label>
             <input
               id="title"
+              placeholder="Title of your entry..."
               type="text"
               name="title"
               maxLength={30}

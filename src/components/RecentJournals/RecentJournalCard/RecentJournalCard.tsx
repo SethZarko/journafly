@@ -1,4 +1,4 @@
-import type { IJournal } from "../../../App";
+import type { IJournal } from "../../../types/IJournal";
 
 import style from "./RecentJournalCard.module.scss";
 
