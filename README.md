@@ -39,7 +39,7 @@ Some highlights I learned working on this project:
 - Creating a single source of truth in `App.tsx` `state`
 - Also utilizing local component `state` when effective, i.e, such as for forms and search or fetching functionality.
 - Using boolean `state` to conditionally render different views, triggered by `onClicks`
-- For simple global `state` access, the `useOutletContext` hook in `React Router` was effective for this build until more `state` was required to be lifted into App. At this point, it was necessary to create a smapp `AppContextProvider` to wrap around the application.
+- For simple global `state` access, the `useOutletContext` hook in `React Router` was effective for this build until more `state` was required to be lifted into App. At this point, it was necessary to create a small `AppContextProvider` to wrap around the application.
 - Use of loading and error `state` to provide UX/UI indications to users
 - Reading from, creating, and updating the application's central `state`, synchronously with `localStorage` within `App.tsx`
 - Using `switch/case` statements where applicable for multivarious options exist. 
