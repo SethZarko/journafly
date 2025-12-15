@@ -48,7 +48,7 @@ Some highlights I learned working on this project:
 
 ## Possible Future Features
 
-- Associate or link journal entries with the specific inripirational quote and philosopher that the user was currently looking at when they decided to make a journal entry.
+- Associate or link journal entries with the specific inripirational quote and philosopher that the user was currently looking at when they decided to make a journal entry. ✅
 - Add a proper backend framework and database
 - Potentially add authentication and authorization
 - Add protected user profiles 
@@ -58,7 +58,7 @@ Some highlights I learned working on this project:
 
 ## Possible Refactors / TODOs
 - Refactor `state management` pattern in `App.tsx` to use a `localStorage` custom hook.
-- Clean up and better organize Types and Interfaces
+- Clean up and better organize Types and Interfaces ✅
 - Add Accessibility and Unit Tests
 - Upgrade to Toast message render from window.confirm for better UX/UI when deleting an entry
 <hr/>
