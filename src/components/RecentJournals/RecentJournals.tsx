@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { useOutletContext } from "react-router";
 import { Pagination } from "../Pagination/Pagination";
 import { RecentJournalCard } from "./RecentJournalCard/RecentJournalCard";
 
 import type { IJournal } from "../../App";
 
 import styles from "./RecentJournals.module.scss";
+import { useAppState } from "../../context/AppStateContext";
 
 export const RecentJournals: React.FC = (): React.ReactNode => {
-  const [sortedJournals] = useOutletContext<[IJournal[]]>();
+  const { sortedJournals } = useAppState();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [quotesPerPage] = useState<number>(1);
 

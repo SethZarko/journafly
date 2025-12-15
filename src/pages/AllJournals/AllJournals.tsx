@@ -1,14 +1,14 @@
-import { useOutletContext } from "react-router";
 import { Link } from "react-router";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useRef } from "react";
+import { useAppState } from "../../context/AppStateContext";
 
-import type { IJournal } from "../../App";
+import type { IJournal } from "../../types/IJournal";
 
 import styles from "./AllJournals.module.scss";
 
 export const AllJournals: React.FC = (): React.ReactNode => {
-  const [sortedJournals] = useOutletContext<[IJournal[]]>();
+  const { sortedJournals } = useAppState();
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const virtualizer = useVirtualizer({

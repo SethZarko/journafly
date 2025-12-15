@@ -1,20 +1,9 @@
 import { useState, useEffect } from "react";
 import { InspirationCard } from "./InspirationCard/InspirationCard";
 import { Pagination } from "../Pagination/Pagination";
-import { useOutletContext } from "react-router";
-import type { IJournal } from '../../App';
+import { useAppState } from "../../context/AppStateContext";
 
-interface IQuotes {
-  id: string;
-  quote: string;
-  work: string;
-}
-
-interface IData {
-  id: string;
-  quotes: IQuotes[];
-  name: string;
-}
+import type { IQuotes } from "../../types/IQuote";
 
 interface IInspirationProps {
   philosopher: string;
@@ -23,11 +12,10 @@ interface IInspirationProps {
 export const Inspiration: React.FC<IInspirationProps> = ({
   philosopher,
 }): React.ReactNode => {
-  const [ , , quotes, setQuotes, setCurrentQuote] = useOutletContext<[IJournal[], React.Dispatch<React.SetStateAction<IJournal[]>>, IData | null, React.Dispatch<React.SetStateAction<IData[]>>,  React.Dispatch<React.SetStateAction<number>>]>()
+  const { quotes, setQuotes, setCurrentQuote, currentPage, setCurrentPage } = useAppState()
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  
   const [quotesPerPage] = useState<number>(1);
 
   const authorSearch: string | undefined = philosopher.includes("+")
@@ -61,7 +49,7 @@ export const Inspiration: React.FC<IInspirationProps> = ({
 
     fetchData(philosopher);
     setCurrentPage(1);
-  }, [philosopher, setQuotes]);
+  }, [philosopher, setQuotes, setCurrentPage]);
 
   // Pagination
   const indexOfLastQuote = currentPage * quotesPerPage;

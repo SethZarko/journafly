@@ -1,12 +1,12 @@
-import { Link, useOutletContext } from "react-router";
+import { Link } from "react-router";
 import styles from "./Hero.module.scss";
 import { Inspiration } from "../Inspiration/Inspiration";
 import { PhilosopherSelect } from "../PhilosopherSelect/PhilosopherSelect";
 import { RecentJournals } from "../RecentJournals/RecentJournals";
-import type { IData, IJournal } from "../../App";
+import { useAppState } from "../../context/AppStateContext";
 
 export const Hero: React.FC = (): React.ReactNode => {
-  const [ , , , , , selectedName, setSelectedName] = useOutletContext<[IJournal[], React.Dispatch<React.SetStateAction<IJournal[]>>, IData | null, React.Dispatch<React.SetStateAction<IData[]>>,  React.Dispatch<React.SetStateAction<number>>, string, React.Dispatch<React.SetStateAction<string>>]>()
+  const { selectedName, setSelectedName } = useAppState()
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
